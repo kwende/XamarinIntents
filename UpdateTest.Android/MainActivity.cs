@@ -7,6 +7,9 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using Android;
+using Android.Support.V4.Content;
+using Android.Support.V4.App;
 
 namespace UpdateTest.Droid
 {
@@ -15,6 +18,17 @@ namespace UpdateTest.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            //https://stackoverflow.com/questions/31746787/xamarin-android-system-unauthorizedaccessexception-access-to-the-path-is-de
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != (int)Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.WriteExternalStorage }, 0);
+            }
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != (int)Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.ReadExternalStorage }, 0);
+            }
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
